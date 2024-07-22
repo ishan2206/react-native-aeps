@@ -45,3 +45,4 @@ public interface RDServiceEvents {
 
   void onDeviceDriverFound(Boolean isFound);
 }
+
