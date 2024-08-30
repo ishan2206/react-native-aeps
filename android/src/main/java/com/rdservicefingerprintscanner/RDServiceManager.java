@@ -196,7 +196,7 @@ public class RDServiceManager {
     int iInfo = 0;
     int index = 1;
     for (ResolveInfo resolveInfo : resolveInfoList) {
-      String _pkg = "com.mantra.mfs110.rdservice";
+     String _pkg = resolveInfo.activityInfo.packageName;
 
       if (!mapRDDriverBlacklist.containsKey(_pkg)) {
         try {
