@@ -158,7 +158,7 @@ public class RDServiceManager {
     }
     boolean isContainesPackage = true;
     for (ResolveInfo resolveInfo : resolveInfoList) {
-      String _pkg = "com.mantra.mfs110.rdservice";
+      String _pkg = resolveInfo.activityInfo.packageName;
       if (packageName.contains(_pkg)) {
         isContainesPackage = true;
         break;
