@@ -41,6 +41,7 @@ public class RDServiceManager {
       put("com.mantra.rdservice", "Mantra");
       put("com.acpl.registersdk", "Startek FM220");
       put("com.rd.gemalto.com.rdserviceapp", "Gemalto 3M Cogent CSD200");
+      put("com.acpl.registersdk_l1", "Startek L1");
       put("com.integra.registered.device", "Integra");
       put("com.aratek.asix_gms.rdservice", "Aratek");
       put("rdservice.metsl.metslrdservice", "Maestros");
