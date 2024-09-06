@@ -245,14 +245,14 @@ public class RDServiceManager {
    */
   public void captureRdService(@NonNull String rd_service_package, @NonNull String pid_options,Activity activity) {
 
-    if (mapRDDriverRCIndex.containsKey("com.mantra.mfs110.rdservice")) {
-      int capture_rc_index = mapRDDriverRCIndex.get("com.mantra.mfs110.rdservice");
+    if (mapRDDriverRCIndex.containsKey(rd_service_package)) {
+      int capture_rc_index = mapRDDriverRCIndex.get(rd_service_package);
       int capture_rc = getRDServiceCaptureRC(capture_rc_index);
 
 
       // Capture fingerprint using RD Service
       Intent intentCapture = new Intent("in.gov.uidai.rdservice.fp.CAPTURE");
-      intentCapture.setPackage("com.mantra.mfs110.rdservice");
+      intentCapture.setPackage(rd_service_package);
       intentCapture.putExtra("PID_OPTIONS", pid_options);
       activity.startActivityForResult(intentCapture, capture_rc);
     } else {
