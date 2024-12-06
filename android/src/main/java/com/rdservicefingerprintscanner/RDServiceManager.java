@@ -175,7 +175,7 @@ public class RDServiceManager {
   public void openFingerPrintScanner(String packageName,String pid_options,Activity activity){
     if(isDeviceDriverFound(packageName,activity)){
       Intent intentCapture = new Intent("in.gov.uidai.rdservice.fp.CAPTURE");
-      intentCapture.setPackage("com.mantra.mfs110.rdservice");
+      intentCapture.setPackage(packageName);
       intentCapture.putExtra("PID_OPTIONS", pid_options);
       activity.startActivityForResult(intentCapture, FINGERPRINT_SCANNER_CAPTURE);
     }
