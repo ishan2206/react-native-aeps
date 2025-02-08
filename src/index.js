@@ -116,6 +116,40 @@ export function openFingerPrintScanner(
   });
 }
 
+export function openFaceAuth(
+ transactionId = Math.random().toString(36).substring(7)
+) {
+  return new Promise((resolve, reject) => {
+    if (transactionId ) {
+      RdserviceFingerprintscanner.openFaceAuth(
+        transactionId
+      )
+        .then((res) => {
+          
+          if (res.pidDataJsonString) {
+            const resObj = {
+              pidDataJson: JSON.parse(res.pidDataJsonString),
+              pidDataXML: res.pidDataXML,
+              rdServicePackage: res.rdServicePackage,
+              status: res.status,
+              errInfo: res.errInfo,
+              errorCode: parseInt(res.errorCode),
+              message: res.message,
+            };
+            resolve(resObj);
+          } else {
+            resolve(res);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } else {
+      reject('Package Name cannot be empty');
+    }
+  });
+}
+
 export function captureFinger(pidOptions = DEFAULT_PID_OPTIONS) {
   return new Promise((resolve, reject) => {
     RdserviceFingerprintscanner.captureFinger(pidOptions)
