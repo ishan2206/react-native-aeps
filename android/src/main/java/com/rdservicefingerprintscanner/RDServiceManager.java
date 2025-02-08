@@ -26,7 +26,7 @@ public class RDServiceManager {
 
   private static final int RC_RDSERVICE_DISCOVER_START_INDEX = 8500;
   private static final int RC_RDSERVICE_CAPTURE_START_INDEX = 8300;
-
+  private static final int FACE_AUTH_RESPONSE = 7777;
   private static final int FINGERPRINT_SCANNER_CAPTURE = 8761;
 
 
@@ -121,6 +121,14 @@ public class RDServiceManager {
    */
   public void onActivityResult(@NonNull int requestCode, @NonNull int resultCode, @NonNull Intent data) {
 
+    if(requestCode == FACE_AUTH_RESPONSE){
+      if (resultCode == RESULT_OK) {
+        onRDFaceCaptureIntentResponse(data, TAG);  // Fingerprint Captured
+      } else {
+        mRDEvent.onRDServiceCaptureFailed(resultCode, data, data.getPackage());    // Fingerprint Capture Failed
+      }
+    }
+
     if(requestCode == FINGERPRINT_SCANNER_CAPTURE){
       if (resultCode == RESULT_OK) {
         onRDServiceCaptureIntentResponse(data, data.getPackage());  // Fingerprint Captured
@@ -182,6 +190,20 @@ public class RDServiceManager {
     else{
       mRDEvent.onDeviceDriverFound(false);
     }
+  }
+
+    public void openFaceAuth(String transactionId, Activity activity){
+    try{
+      Intent intent = new Intent("in.gov.uidai.rdservice.face.CAPTURE");
+      intent.putExtra("request", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PidOptions ver=\"1.0\" env=\"P\">\n   <Opts fCount=\"\" fType=\"2\" iCount=\"1\" iType=\"1\" pCount=\"1\" pType=\"0\" format=\"0\" pidVer=\"2.0\" timeout=\"\" otp=\"\" wadh=\"\" posh=\"\" />\n   <Demo>Demographic Attributes as specified in authentication API</Demo>\n   <CustOpts>\n      <Param name=\"txnId\" value=\"" + transactionId + "\"/>\n   </CustOpts>\n</PidOptions>");
+      activity.startActivityForResult(intent, 7777);
+    }
+    
+    catch (Exception e) {
+      e.printStackTrace();
+      mRDEvent.onRDServiceDriverDiscoveryFailed(0, null, "UIDAI", e.getMessage());
+    }
+   
   }
 
 
@@ -291,6 +313,17 @@ public class RDServiceManager {
     if (b != null) {
       // sendWebViewResponse("rdservice_resp", b.getString("PID_DATA", ""));
       mRDEvent.onRDServiceCaptureResponse(b.getString("PID_DATA", ""), rd_service_package);
+
+    }
+  }
+
+    private void onRDFaceCaptureIntentResponse(@NonNull Intent data, @NonNull String rd_service_package) {
+
+    Bundle b = data.getExtras();
+    if (b != null) {
+     
+      // sendWebViewResponse("rdservice_resp", b.getString("PID_DATA", ""));
+      mRDEvent.onRDServiceCaptureResponse(data.getStringExtra("response"), rd_service_package);
 
     }
   }
