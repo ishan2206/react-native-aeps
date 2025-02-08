@@ -60,6 +60,13 @@ public class RdserviceFingerprintscannerModule extends ReactContextBaseJavaModul
     rdServiceManager.openFingerPrintScanner(packageName,pidOptions,activity);
   }
 
+  @ReactMethod
+  public void openFaceAuth(String transactionId,Promise promise) {
+    this.promise = promise;
+    final Activity activity = getCurrentActivity();
+    rdServiceManager.openFaceAuth(transactionId,activity);
+  }
+
 
   @ReactMethod
   public void captureFinger(String pidOptions, Promise promise) {
