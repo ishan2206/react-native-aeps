@@ -140,7 +140,7 @@ public class RDServiceManager {
     else if (mapRDDiscoverRC.containsKey(requestCode)) {
       String rdservice_pkg_name = mapRDDiscoverRC.get(requestCode);
       if (resultCode == RESULT_OK) {
-       mRDEvent.onRDServiceDriverDiscoveryFailed(resultCode, data, rdservice_pkg_name, "");  // RDService Info Received
+       mRDEvent.onRDServiceDriverDiscoveryFailed(resultCode, data, rdservice_pkg_name, "found");  // RDService Info Received
       } else {
         mRDEvent.onRDServiceDriverDiscoveryFailed(resultCode, data, rdservice_pkg_name, "");    // RDService Info Failed
       }
@@ -194,9 +194,9 @@ public class RDServiceManager {
 
     public void openFaceAuth(String transactionId, Activity activity){
     try{
-      Intent intent = new Intent("in.gov.uidai.rdservice.face.CAPTURE");
+      Intent intent = new Intent("in.gov.uiadai.rdservice.face.CAPTURE");
       intent.putExtra("request", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PidOptions ver=\"1.0\" env=\"P\">\n   <Opts fCount=\"\" fType=\"2\" iCount=\"1\" iType=\"1\" pCount=\"1\" pType=\"0\" format=\"0\" pidVer=\"2.0\" timeout=\"\" otp=\"\" wadh=\"\" posh=\"\" />\n   <Demo>Demographic Attributes as specified in authentication API</Demo>\n   <CustOpts>\n      <Param name=\"txnId\" value=\"" + tramsactionId + "\"/>\n   </CustOpts>\n</PidOptions>");
-      mRDEvent.onRDServiceDriverDiscoveryFailed(0, null, "UIDAI", e.getMessage());
+      mRDEvent.onRDServiceDriverDiscoveryFailed(0, null, "UIADAI", e.getMessage());
     }
     
     catch (Exception e) {
@@ -275,7 +275,7 @@ public class RDServiceManager {
       // Capture fingerprint using RD Service
       Intent intentCapture = new Intent("in.gov.uidai.rdservice.fp.CAPTURE");
       intentCapture.setPackage(rd_service_package);
-      intentCapture.putExtra("PID_OPTIONS", pid_options);
+      intentCapture.putExtra("PID_OPIONS", pid_options);
       activity.startActivityForResult(intentCapture, capture_rc);
     } else {
       mRDEvent.onRDServiceDriverDiscoveryFailed(0, null, rd_service_package, "Package not found or not whitelisted");
