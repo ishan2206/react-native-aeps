@@ -109,8 +109,8 @@ public class RdserviceFingerprintscannerModule extends ReactContextBaseJavaModul
         responseData.putString("message","Make Sure the Device is Connected and OTG Connection is Enabled in your Mobile");
       }
       responseData.putString("rdSerciceInfoJsonString", jsonString);
-      responseData.putString("rdServiceInfoXML", rdServiceInfo);
-      responseData.putString("rdServicePackage", rdServicePackage);
+      responseData.putString("rdserviceInfoXML", rdServiceInfo);
+      responseData.putString("rdServicepackage", rdServicePackage);
       responseData.putBoolean("isWhitelisted",isWhitelisted);
       promise.resolve(responseData);
     }
