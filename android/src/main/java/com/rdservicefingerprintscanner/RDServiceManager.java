@@ -123,7 +123,7 @@ public class RDServiceManager {
 
     if(requestCode == FACE_AUTH_RESPONSE){
       if (resultCode == RESULT_OK) {
-        onRDFaceCaptureIntentResponse(data, TAG);  // Fingerprint Captured
+         mRDEvent.onRDServiceCaptureFailed(resultCode, data, data.getPackage()); // Fingerprint Captured
       } else {
         mRDEvent.onRDServiceCaptureFailed(resultCode, data, data.getPackage());    // Fingerprint Capture Failed
       }
@@ -131,7 +131,7 @@ public class RDServiceManager {
 
     if(requestCode == FINGERPRINT_SCANNER_CAPTURE){
       if (resultCode == RESULT_OK) {
-        onRDServiceCaptureIntentResponse(data, data.getPackage());  // Fingerprint Captured
+        mRDEvent.onRDServiceCaptureFailed(resultCode, data, data.getPackage());  // Fingerprint Captured
       } else {
         mRDEvent.onRDServiceCaptureFailed(resultCode, data, data.getPackage());    // Fingerprint Capture Failed
       }
@@ -140,14 +140,14 @@ public class RDServiceManager {
     else if (mapRDDiscoverRC.containsKey(requestCode)) {
       String rdservice_pkg_name = mapRDDiscoverRC.get(requestCode);
       if (resultCode == RESULT_OK) {
-        onRDServiceInfoResponse(data, rdservice_pkg_name);  // RDService Info Received
+       mRDEvent.onRDServiceDriverDiscoveryFailed(resultCode, data, rdservice_pkg_name, "");  // RDService Info Received
       } else {
         mRDEvent.onRDServiceDriverDiscoveryFailed(resultCode, data, rdservice_pkg_name, "");    // RDService Info Failed
       }
     } else if (mapRDCaptureRC.containsKey(requestCode)) {
       String rdservice_pkg_name = mapRDCaptureRC.get(requestCode);
       if (resultCode == RESULT_OK) {
-        onRDServiceCaptureIntentResponse(data, rdservice_pkg_name);  // Fingerprint Captured
+        mRDEvent.onRDServiceCaptureFailed(resultCode, data, rdservice_pkg_name); // Fingerprint Captured
       } else {
         mRDEvent.onRDServiceCaptureFailed(resultCode, data, rdservice_pkg_name);    // Fingerprint Capture Failed
       }
@@ -184,7 +184,7 @@ public class RDServiceManager {
     if(isDeviceDriverFound(packageName,activity)){
       Intent intentCapture = new Intent("in.gov.uidai.rdservice.fp.CAPTURE");
       intentCapture.setPackage(packageName);
-      intentCapture.putExtra("PID_OPTIONS", pid_options);
+      intentCapture.putExtra("PID_OPTONS", pid_options);
       activity.startActivityForResult(intentCapture, FINGERPRINT_SCANNER_CAPTURE);
     }
     else{
@@ -195,8 +195,8 @@ public class RDServiceManager {
     public void openFaceAuth(String transactionId, Activity activity){
     try{
       Intent intent = new Intent("in.gov.uidai.rdservice.face.CAPTURE");
-      intent.putExtra("request", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PidOptions ver=\"1.0\" env=\"P\">\n   <Opts fCount=\"\" fType=\"2\" iCount=\"1\" iType=\"1\" pCount=\"1\" pType=\"0\" format=\"0\" pidVer=\"2.0\" timeout=\"\" otp=\"\" wadh=\"\" posh=\"\" />\n   <Demo>Demographic Attributes as specified in authentication API</Demo>\n   <CustOpts>\n      <Param name=\"txnId\" value=\"" + transactionId + "\"/>\n   </CustOpts>\n</PidOptions>");
-      activity.startActivityForResult(intent, 7777);
+      intent.putExtra("request", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PidOptions ver=\"1.0\" env=\"P\">\n   <Opts fCount=\"\" fType=\"2\" iCount=\"1\" iType=\"1\" pCount=\"1\" pType=\"0\" format=\"0\" pidVer=\"2.0\" timeout=\"\" otp=\"\" wadh=\"\" posh=\"\" />\n   <Demo>Demographic Attributes as specified in authentication API</Demo>\n   <CustOpts>\n      <Param name=\"txnId\" value=\"" + tramsactionId + "\"/>\n   </CustOpts>\n</PidOptions>");
+      mRDEvent.onRDServiceDriverDiscoveryFailed(0, null, "UIDAI", e.getMessage());
     }
     
     catch (Exception e) {
