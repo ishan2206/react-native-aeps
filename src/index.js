@@ -64,25 +64,17 @@ export function getDeviceInfo() {
 }
 
 export function isDriverFound(packageName) {
-  return new Promise((resolve, reject) => {
-    reject('Err:4587 - Not supported');
-  });
+  return RdserviceFingerprintscanner.isDriverFound(packageName);
 }
 
 export function openFingerPrintScanner(packageName, pidOptions = DEFAULT_PID_OPTIONS) {
-  return new Promise((resolve, reject) => {
-    reject('Err:4557 - Not supported');
-  });
+  return RdserviceFingerprintscanner.openFingerPrintScanner(packageName, pidOptions);
 }
 
 export function openFaceAuth(transactionId = Math.random().toString(36).substring(7)) {
-  return new Promise((resolve, reject) => {
-    reject('Err:4542 - Not supported');
-  });
+  return RdserviceFingerprintscanner.openFaceAuth(transactionId);
 }
 
 export function captureFinger(pidOptions = DEFAULT_PID_OPTIONS) {
-  return new Promise((resolve, reject) => {
-    reject('Err:4598 - Not supported');
-  });
+  return RdserviceFingerprintscanner.captureFinger(pidOptions);
 }
